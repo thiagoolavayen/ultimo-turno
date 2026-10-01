@@ -7,6 +7,7 @@ Juego corto de terror y sigilo en primera persona. Un empleado queda encerrado e
 - Benjamin Alcibar
 - Thiago Lavayen
 - Franco Carnessali
+- Franco Albanese
 - Maximo Mayandes
 
 ## Ejecutar el juego en una PC
