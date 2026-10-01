@@ -2,15 +2,34 @@
 
 Juego corto de terror y sigilo en primera persona. Un empleado queda encerrado en un depósito durante el cierre. Para escapar tiene que recuperar un fusible, reparar la corriente, encontrar una llave y levantar el portón mientras evita a un intruso.
 
+## Integrantes
+
+**Pendiente de confirmar:** nombres y apellidos de los integrantes del equipo.
+
 ## Ejecutar el juego en una PC
 
 **El archivo listo para jugar es [`JUGAR.html`](JUGAR.html).** Incluye todos los gráficos, sonidos y código del juego.
 
-1. Guardá `JUGAR.html` en una carpeta de tu PC. Si lo descargás desde GitHub, abrí ese archivo en el repositorio y utilizá la opción de descargar el archivo original.
+**No se necesita descargar ni extraer un ZIP.** Tampoco hace falta compilar, instalar Python, Node.js, paquetes npm ni un motor para jugar: es HTML, CSS y JavaScript que ejecuta el navegador.
+
+1. Guardá `JUGAR.html` en una carpeta de tu PC. Si lo descargás desde GitHub, abrí ese archivo en el repositorio y presioná **Download raw file** (icono de descarga). Guardá el archivo con el nombre `JUGAR.html`, sin agregar `.txt`.
 2. Hacé doble clic en `JUGAR.html` para abrirlo en tu navegador.
 3. Presioná **Empezar turno**. En Windows, podés usar **F11** para pantalla completa.
 
 También podés abrir `ABRIR_WINDOWS.bat` si descargaste o clonaste el proyecto completo. Ese archivo simplemente abre `JUGAR.html`.
+
+### Revisar el proyecto completo desde el repositorio
+
+Todo el código está disponible en la carpeta [`src/`](src/). Se puede revisarlo en GitHub sin descargar archivos.
+
+Si se desea obtener el proyecto completo sin ZIP, con Git instalado:
+
+```bash
+git clone https://github.com/thiagoolavayen/ultimo-turno.git
+cd ultimo-turno
+```
+
+Después se abre `JUGAR.html` con doble clic. También se puede abrir `src/index.html` directamente para ejecutar el código fuente. **No hay una etapa de compilación obligatoria.** El script `build.py` solo reconstruye el HTML autocontenido después de modificar el código.
 
 ### Requisitos para jugar
 
@@ -85,3 +104,15 @@ La prueba de navegador es opcional y requiere Playwright con Chromium. Los detal
 JavaScript, HTML, CSS, Canvas, Web Audio y almacenamiento local. El escenario se dibuja mediante raycasting; los gráficos y los efectos de sonido son originales y están incluidos en el proyecto. La IA del intruso utiliza reglas de patrulla, investigación, persecución y búsqueda de caminos.
 
 Esta entrega contiene un mapa, un enemigo, objetivos de escape, escondites, puntos de control y pantallas de derrota y victoria. La validación de la versión jugable está documentada en [`docs/VALIDACION.md`](docs/VALIDACION.md).
+
+## Uso de inteligencia artificial y prompts
+
+Se utilizó ChatGPT/Codex para ayudar con la idea, la programación, los ajustes de comodidad, la documentación y las pruebas. Los siguientes prompts son una reconstrucción resumida de las instrucciones de desarrollo; no son una transcripción literal del historial.
+
+1. “Haceme un juego de terror corto, pero que se entienda de una. Que tenga suspenso y algún susto, y una idea mejor que la anterior.”
+2. “Bueno, programalo. Que sea intuitivo, que tenga un objetivo claro y que no tenga que adivinar qué hacer.”
+3. “Quiero que sea cómodo. Que pueda mirar para arriba y bajar la mirada con el mouse, y que también se pueda jugar con teclado.”
+4. “No me llenes la pantalla de instrucciones. Dejá la ayuda cuando la pida y hacé que la voz suene más humana, con frases cortas.”
+5. “Preparame el repo con todo el código y un README que explique cómo ejecutarlo en una PC, qué necesita y cuáles son los controles.”
+6. “Probalo completo: que pueda terminar la partida, guardar el progreso y volver a intentar si me encuentra el enemigo.”
+7. “Lo tengo que entregar mañana. Nada de zips ni extraer archivos. Que el profesor abra el repo y tenga todo explicado: ejecución, integrantes, prompts y código.”
