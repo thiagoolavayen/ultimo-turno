@@ -111,12 +111,32 @@ Esta entrega contiene un mapa, un enemigo, objetivos de escape, escondites, punt
 
 ## Uso de inteligencia artificial y prompts
 
-Se utilizó ChatGPT/Codex para ayudar con la idea, la programación, los ajustes de comodidad, la documentación y las pruebas. Los siguientes prompts son una reconstrucción resumida de las instrucciones de desarrollo; no son una transcripción literal del historial.
+Se utilizó ChatGPT/Codex para ayudar con la programación, los ajustes de comodidad, la documentación y las pruebas. Los siguientes prompts son una reconstrucción ampliada de las instrucciones de desarrollo para documentar el diseño y sus requisitos; no son una transcripción literal del historial.
 
-1. “Haceme un juego de terror corto, pero que se entienda de una. Que tenga suspenso y algún susto, y una idea mejor que la anterior.”
-2. “Bueno, programalo. Que sea intuitivo, que tenga un objetivo claro y que no tenga que adivinar qué hacer.”
-3. “Quiero que sea cómodo. Que pueda mirar para arriba y bajar la mirada con el mouse, y que también se pueda jugar con teclado.”
-4. “No me llenes la pantalla de instrucciones. Dejá la ayuda cuando la pida y hacé que la voz suene más humana, con frases cortas.”
-5. “Preparame el repo con todo el código y un README que explique cómo ejecutarlo en una PC, qué necesita y cuáles son los controles.”
-6. “Probalo completo: que pueda terminar la partida, guardar el progreso y volver a intentar si me encuentra el enemigo.”
-7. “Lo tengo que entregar mañana. Nada de zips ni extraer archivos. Que el profesor abra el repo y tenga todo explicado: ejecución, integrantes, prompts y código.”
+### 1. Idea y recorrido
+
+> Quiero un juego de terror psicológico ambientado en un taller con un depósito. Se corta la luz y se empiezan a escuchar pasos, aunque supuestamente no queda nadie. El jugador aparece adentro y tiene que escapar. El recorrido tiene que ser claro: buscar un fusible, llevarlo al tablero para recuperar la corriente, encontrar la llave y abrir el portón. Si logra salir, gana. Si lo atrapan, quiero un screamer con imagen y sonido, y que pueda reintentar desde el último punto de control.
+
+### 2. Programación
+
+> Programalo en primera persona usando HTML, CSS y JavaScript. Quiero que se pueda ejecutar en una PC desde el navegador. Organizá el escenario con taller, depósito, oficina y salida. El fusible, el tablero y la llave tienen que funcionar en ese orden; no quiero que se pueda terminar sin completar los objetivos.
+
+### 3. Controles y comodidad
+
+> Quiero moverme con WASD, correr con Shift y mirar con el mouse para los costados, arriba y abajo. Dejá también las flechas como alternativa para mirar. E tiene que servir para usar objetos, abrir puertas y entrar o salir de los escondites. Que la cámara sea cómoda, sin balanceos constantes, y que Esc pause el juego.
+
+### 4. Amenaza y tensión
+
+> La amenaza tiene que patrullar el depósito, investigar los ruidos y perseguirme cuando me vea. Las paredes y estanterías tienen que cortar su visión. Quiero poder cerrar puertas, esconderme si no me vio entrar y tirar botellas para distraerlo. La linterna tiene que ayudar a ver, pero también puede delatarme. Que los pasos avisen que está cerca.
+
+### 5. Instrucciones y audio
+
+> No quiero carteles grandes explicándome todo durante la partida. Mostrá el objetivo actual, una indicación chica cuando pueda interactuar y un plano con M si necesito orientarme. La radio tiene que hablar en español, con una voz lo más natural posible y frases cortas. Dejá controles para apagar la voz, ajustar el volumen y desactivar los efectos de luz.
+
+### 6. Guardado y pruebas
+
+> Guardá puntos de control cuando consiga el fusible, arregle el tablero y encuentre la llave. Si me atrapan, el screamer tiene que aparecer antes de ofrecer el reintento, conservando el progreso del último punto. Probá el recorrido completo, las puertas, los escondites, la persecución, el guardado y la victoria. Revisá que el enemigo no atraviese paredes.
+
+### 7. Entrega
+
+> Prepará un repositorio de GitHub con todo el código, las pruebas y un README completo. Tiene que explicar la idea, los integrantes, los controles, los requisitos y cómo ejecutarlo en una PC. Incluí los prompts de desarrollo. Para jugar no quiero ZIP, extracción ni instalaciones de paquetes: que alcance con descargar JUGAR.html y abrirlo con doble clic. Diferenciá los requisitos para jugar de los que sirven para modificar el código.
