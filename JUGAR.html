@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Último Turno · Terror en el depósito</title><style>
+:root{color-scheme:dark;--yellow:#e6c671;--text:#f0ede3;--muted:#9b9a90;--edge:#ffffff24}*{box-sizing:border-box}body{margin:0;background:#080b0c;color:var(--text);font:14px/1.5 'Segoe UI',Arial,sans-serif;overflow:hidden}button,input{font:inherit}button{cursor:pointer;border-radius:3px;border:1px solid var(--edge);color:var(--text);background:#161c1de6;padding:11px 16px}button:hover{background:#263032}button:focus-visible,input:focus-visible{outline:2px solid var(--yellow);outline-offset:4px}button:disabled{opacity:.4;cursor:default}.hidden{display:none!important}#view{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;outline:none}.grain{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0px,transparent 2px,#00000010 3px,transparent 4px);opacity:.25}#redEdge{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 160px #94251a;opacity:0;transition:opacity .2s}#hud{position:absolute;inset:0;pointer-events:none}.mission{position:absolute;left:35px;top:27px;width:min(560px,65vw);text-shadow:0 2px 8px #000}.eyebrow{font:10px Consolas,monospace;letter-spacing:2px;color:var(--yellow)}.mission .eyebrow{display:flex;gap:22px}.mission .eyebrow span{color:#b0b6b0}.mission h1{font-weight:500;font-size:21px;margin:12px 0 4px}.mission p{color:#b2b8b2;font-size:12px;margin:0}.progress{display:flex;gap:5px;margin-top:14px}.progress i{width:42px;height:3px;background:#ffffff20}.progress i.done{background:var(--yellow)}.map-toggle{pointer-events:auto;position:absolute;right:27px;top:24px;width:171px;background:#0b1112d9;padding:11px 12px;text-align:left}.map-toggle>span,.map-toggle small{font:9px Consolas,monospace;letter-spacing:1px;color:#a4aea8}.map-toggle canvas{display:block;width:145px;height:120px;margin:8px 0;opacity:.9}.map-toggle small{color:var(--yellow)}#compass{position:absolute;top:30px;left:50%;display:flex;flex-direction:column;align-items:center;gap:2px;transform:translateX(-50%);text-shadow:0 1px 5px black}#compassArrow{font-size:23px;color:var(--yellow);transform-origin:center center}#compassText{font:9px Consolas,monospace;letter-spacing:1px;color:var(--yellow)}#compassDistance{font-size:10px;color:#e4e0d5}#crosshair{position:absolute;left:50%;top:50%;width:10px;height:10px;transform:translate(-50%,-50%);opacity:.6}#crosshair i{position:absolute;background:white;border-radius:1px}#crosshair i:first-child{width:10px;height:1px;top:5px}#crosshair i:last-child{height:10px;width:1px;left:5px}#interaction{position:absolute;left:50%;top:61%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;padding:10px 15px;border:1px solid #e6c67150;background:#0c1213d9;border-radius:4px;max-width:85vw;text-align:center}kbd{display:inline-grid;place-items:center;width:29px;height:29px;border:1px solid var(--yellow);color:var(--yellow);font:14px Consolas,monospace;border-radius:3px}#interaction span{font-size:13px}#interaction button{pointer-events:auto;padding:5px 10px;font-size:11px}#hideBanner{position:absolute;left:50%;top:45%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;text-shadow:0 2px 8px black}#hideBanner b{font:18px Consolas,monospace;letter-spacing:3px;color:#b6cbbd}#hideBanner span{font-size:12px;color:#b5beb5}#radio{position:absolute;bottom:130px;left:50%;transform:translateX(-50%);width:min(680px,75vw);padding:16px 20px;background:#0b1010dd;border-left:2px solid var(--yellow);transition:opacity .5s}#radio>span{font:9px Consolas,monospace;color:var(--yellow);letter-spacing:2px}#radio p{font-size:14px;margin:6px 0 0;line-height:1.6}.bottom{position:absolute;left:35px;right:35px;bottom:60px;display:flex;align-items:center;justify-content:space-between;gap:18px}.inventory{display:flex;gap:12px;font:10px Consolas,monospace;letter-spacing:1px}.inventory span{padding:7px 10px;background:#0b1112ce;border:1px solid #ffffff20;color:#68746b}.inventory span.owned{border-color:#e6c67160;color:var(--yellow)}#bottleIcon{color:#bcc5bd}.stamina{width:140px;font:8px Consolas,monospace;letter-spacing:1px;color:#abb3ab}.stamina>div{height:3px;background:#ffffff20;margin-top:6px}.stamina i{display:block;height:100%;width:100%;background:#b4c2b8}#dangerText{font:10px Consolas,monospace;letter-spacing:1px;color:#abb3ab;text-shadow:0 2px 5px black}.controls{position:absolute;bottom:13px;left:35px;right:35px;display:flex;align-items:center;gap:19px;color:#d7d7c8;font:10px Consolas,monospace}.controls b{font-weight:400;color:#8b958c;margin-left:4px}.controls button{pointer-events:auto;border:0;padding:3px 0;background:transparent;font:10px Consolas,monospace;color:#d7d7c8}.controls button:last-child{margin-left:auto}#tutorial{position:absolute;left:35px;top:190px;max-width:340px;border:1px solid #bdbca54a;background:#0b1213e8;border-radius:5px;padding:17px 18px;display:flex;flex-direction:column;gap:8px}#tutorial b{font-size:15px;color:var(--yellow);font-weight:500}#tutorial span{font-size:12px;color:#a7b4aa;line-height:1.7}#tutorial button{pointer-events:auto;margin-top:5px;padding:6px 10px;align-self:flex-start;font-size:11px}.overlay{position:absolute;inset:0;z-index:10;background:#091011e8;backdrop-filter:blur(7px);display:flex;align-items:center;justify-content:center;padding:30px;overflow:auto}.intro{justify-content:space-between;padding:5vh 7vw;background:linear-gradient(90deg,#070c10f5 0%,#101617e0 55%,#111a1885)}.intro-copy{max-width:700px}.intro h2{font-family:Impact,'Arial Narrow',sans-serif;font-weight:400;font-size:clamp(68px,9vw,132px);line-height:.98;letter-spacing:2px;margin:28px 0 26px}.intro h2 em{font-style:normal;color:var(--yellow)}.premise{font-size:18px;line-height:1.7;color:#a9b3a9;margin-bottom:20px}.goal{font-size:19px;font-weight:500;margin:0 0 24px}.steps{display:flex;gap:22px;margin-bottom:30px;flex-wrap:wrap}.steps span{font-size:12px;color:#b9c3b9}.steps b{display:block;color:var(--yellow);font:10px Consolas,monospace;letter-spacing:1px;margin-bottom:5px}.intro-buttons{display:flex;gap:12px;flex-wrap:wrap}.primary{background:var(--yellow);color:#1a201b;border-color:var(--yellow);font-weight:600;padding:14px 21px;text-align:left}.primary:hover{background:#f5d789}.primary span{margin-left:35px}.secondary{background:transparent;color:#c8d0c5;border:1px solid #ffffff30;padding:12px 19px}.settings{display:flex;align-items:center;gap:17px;font-size:11px;color:#a1b1a5;margin-top:22px;flex-wrap:wrap}.settings label{display:flex;align-items:center;gap:5px;cursor:pointer}.settings input{accent-color:var(--yellow)}.settings .volume input{width:70px}.intro-tip{font-size:11px;color:#798b7e;line-height:1.8;margin-top:18px}.intro-side{align-self:stretch;display:flex;flex-direction:column;justify-content:space-between;text-align:right;padding:40px 0}.shift-label{font:12px Consolas,monospace;letter-spacing:3px;line-height:2;color:#adc1ad}.warning-label{padding:9px 15px;border:1px solid #e6c67150;color:var(--yellow);font:10px Consolas,monospace;letter-spacing:1px;transform:rotate(-90deg);transform-origin:right center}.intro-side p{font:italic 20px/1.5 Georgia,serif;color:#9daea0}.card{max-width:520px;width:100%;padding:35px 40px;border:1px solid #ffffff20;background:#0d1415}.card h2{font-family:Impact,'Arial Narrow',sans-serif;font-weight:400;font-size:58px;letter-spacing:1px;line-height:1.05;margin:20px 0}.card p{color:#a9b7aa;line-height:1.8}.card button{display:block;width:100%;margin-top:12px}.card small{display:block;color:#728579;margin-top:18px;font-size:11px}.card .help{font-size:11px}.map-card{max-width:620px;width:100%;text-align:center}.map-card h2{font-size:21px;font-weight:500;margin:10px 0}.map-card canvas{max-height:60vh;max-width:100%;width:auto;display:block;margin:15px auto;background:#111b19;border:1px solid #ffffff20}.map-card p{font-size:11px;color:#a5b1a5}.legend{margin:0 8px}.you{color:#e2efdf}.goal-mark{color:var(--yellow)}.hide-mark{color:#7bac94}.map-card .hint{margin-bottom:18px;color:#738a7b}.results{display:flex;gap:25px;color:var(--yellow);font:12px Consolas,monospace;margin:25px 0}#toast{position:absolute;bottom:245px;left:50%;transform:translateX(-50%);z-index:20;padding:12px 20px;max-width:75vw;text-align:center;background:#171f1be8;border:1px solid #e6c67180;color:#e8dec0;border-radius:4px;font-size:13px;pointer-events:none}.touch-move{display:none;pointer-events:auto;position:absolute;bottom:110px;left:20px;gap:8px}.touch-move button{width:43px;height:43px;font-size:20px;padding:0;background:#10191caa}#pauseSettings .settings{gap:12px;font-size:10px}.card:has(#pauseSettings){max-height:95vh;overflow:auto}@media(max-width:1000px){.mission{left:22px;top:20px;width:57vw}.mission h1{font-size:17px}.mission p{max-width:380px;font-size:11px}#compass{top:125px}.map-toggle{right:18px;top:18px;width:135px;padding:9px}.map-toggle canvas{width:115px;height:95px}.map-toggle>span{font-size:7px}.bottom{left:20px;right:20px}.controls{left:20px;right:20px;gap:12px}.inventory{gap:7px;font-size:8px}.stamina{width:100px}#dangerText{font-size:8px}.intro-side{display:none}.intro{padding:4vh 8vw}.intro h2{font-size:90px}.premise{font-size:15px}.steps{gap:18px;margin-bottom:25px}#tutorial{left:22px;top:150px;width:290px}#radio{bottom:125px;width:75vw}}@media(max-height:700px){.intro h2{font-size:76px;margin:15px 0}.premise{font-size:14px;margin:10px 0}.goal{font-size:16px;margin-bottom:15px}.steps{margin-bottom:18px}.settings{margin-top:15px}.intro-tip{margin:10px 0}.card h2{font-size:44px}.card{padding:25px}.map-card canvas{max-height:52vh}#radio{bottom:110px;padding:10px 15px}#radio p{font-size:12px}}@media(max-width:650px){.intro h2{font-size:68px}.intro{padding:25px}.steps{font-size:10px;gap:13px}.mission{width:70vw;top:16px;left:16px}.mission h1{font-size:14px}.mission .eyebrow{font-size:8px;gap:12px}.mission p{font-size:10px;max-width:260px}.map-toggle{top:100px;right:13px;width:110px}.map-toggle canvas{width:90px;height:75px}.map-toggle>span{font-size:6px}.map-toggle small{font-size:7px}#compass{top:90px;left:45%}.controls{left:14px;right:14px;gap:12px;flex-wrap:wrap}.controls>span{display:none}.controls button{font-size:9px}.bottom{left:14px;right:14px;bottom:58px;gap:8px}.stamina{display:none}.inventory{font-size:7px;gap:4px}.inventory span{padding:5px}.touch-move{display:flex}#tutorial{top:145px;left:15px;max-width:220px;padding:12px}#tutorial b{font-size:12px}#tutorial span{font-size:10px}#radio{bottom:174px;width:90vw}#interaction{top:56%;max-width:92vw}#interaction span{font-size:11px}.overlay{padding:18px}.card{padding:25px}.card h2{font-size:42px}#toast{bottom:280px;max-width:90vw;font-size:11px}.intro-tip{font-size:10px}.map-card h2{font-size:16px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Compact gameplay HUD; full instructions stay in the pause screen. */
+.mission p,.map-toggle canvas,.map-toggle>span,.controls>span,#tutorial{display:none!important}
+.mission{width:auto;max-width:60vw}.mission h1{font-size:17px}.map-toggle{width:auto!important;padding:9px 13px!important}
+#radio{background:#101716b8;border:0;max-width:520px;padding:8px 14px;transition:opacity .5s;pointer-events:none}#radio p{font-size:13px;margin:3px 0}#radio .speaker{font-size:9px}
+#toast{padding:8px 12px;font-size:12px}#compass{top:25px}.controls{opacity:.65}.controls:hover{opacity:1}
+@media(max-width:1000px){#compass{top:100px}}
+
+</style></head>
+<body>
+<canvas id="view" width="960" height="600" aria-label="Depósito en primera persona" tabindex="0"></canvas>
+<div class="grain" aria-hidden="true"></div><div id="redEdge" aria-hidden="true"></div>
+<div id="hud" class="hidden">
+ <div class="mission"><span class="eyebrow">ÚLTIMO TURNO <span id="zone">MUELLE DE CARGA</span></span><h1 id="objective">Buscá el fusible en el taller</h1><p id="objectiveDetail">Seguí la flecha amarilla.</p><div class="progress"><i></i><i></i><i></i><i></i></div></div>
+ <button id="mapButton" class="map-toggle" title="Abrir plano (M)"><span>PLANO DEL DEPÓSITO</span><canvas id="miniMap" width="145" height="120"></canvas><small>M · Ampliar plano</small></button>
+ <div id="compass"><span id="compassArrow">▲</span><span id="compassText">TALLER</span><small id="compassDistance"></small></div>
+ <div id="crosshair" aria-hidden="true"><i></i><i></i></div>
+ <div id="interaction" class="hidden"><kbd>E</kbd><span id="interactionText"></span><button id="useButton" aria-label="Interactuar">Usar</button></div>
+ <div id="hideBanner" class="hidden"><b>ESTÁS OCULTO</b><span>Escuchá los pasos. E para salir.</span></div>
+ <div id="radio"><span id="speaker">RADIO / SUPERVISOR</span><p id="radioText">La llave está en la oficina, pero primero hay que dar corriente.</p></div>
+ <div class="bottom"><div class="inventory"><span id="fuseIcon">▣ FUSIBLE</span><span id="keyIcon">⚿ LLAVE</span><span id="bottleIcon">Q · BOTELLAS 2</span></div><div class="stamina"><span>RESISTENCIA</span><div><i id="staminaBar"></i></div></div><span id="dangerText">ESCUCHÁ EL DEPÓSITO</span></div>
+ <div class="controls"><span>WASD <b>caminar</b></span><span>SHIFT <b>correr</b></span><button id="flashButton">F · Linterna</button><button id="bottleButton">Q · Botella</button><button id="hintButton">H · Ayuda</button><button id="pauseButton">ESC · Pausa</button></div>
+ <div id="tutorial"><b id="tutorialTitle">Movete con W A S D</b><span id="tutorialText">Las flechas izquierda y derecha giran la vista. También podés hacer clic para mirar con el mouse.</span><button id="skipTutorial">Entendido</button></div>
+ <div class="touch-move"><button data-control="turnLeft" aria-label="Girar izquierda">↶</button><button data-control="forward" aria-label="Caminar adelante">↑</button><button data-control="turnRight" aria-label="Girar derecha">↷</button></div>
+</div>
+<section id="intro" class="overlay intro">
+ <div class="intro-copy"><span class="eyebrow">UNA NOCHE · UN DEPÓSITO · ALGUIEN MÁS</span><h2>ÚLTIMO<br><em>TURNO.</em></h2><p class="premise">Bajaste el portón. Apagaste las luces.<br>Ahora escuchás pasos entre las estanterías.</p><p class="goal">Tenés que abrir el portón y salir.</p><div class="steps"><span><b>01</b> Repará la corriente</span><span><b>02</b> Conseguí la llave</span><span><b>03</b> Escapá</span></div>
+ <div class="intro-buttons"><button id="start" class="primary">Empezar turno <span>→</span></button><button id="continue" class="hidden secondary">Continuar partida</button></div>
+ <div class="settings"><label><input id="sound" type="checkbox" checked> Sonido</label><label><input id="voice" type="checkbox" checked> Radio con voz</label><label><input id="effects" type="checkbox" checked> Efectos de luz</label><label class="volume">Volumen <input id="volume" type="range" min="0" max="1" value="0.45" step="0.05"></label></div><p class="intro-tip">WASD para caminar · E para usar objetos · M para ver el plano<br>Mouse o flechas para mirar arriba y abajo · H para pedir ayuda<br>No se necesita Internet. Esc abre los controles y la pausa.</p></div><div class="intro-side"><span class="shift-label">DEPÓSITO 04<br>02:17 AM</span><div class="warning-label">CIERRE NO CONFIRMADO</div><p>El último en salir<br>apaga la luz.</p></div>
+</section>
+<section id="pause" class="overlay hidden"><div class="card"><span class="eyebrow">TURNO EN PAUSA</span><h2>Respirá.</h2><p>La amenaza se detiene mientras este menú está abierto.</p><button id="resume" class="primary">Volver al depósito →</button><button id="pauseMap" class="secondary">Ver plano y objetivo</button><button id="restart" class="secondary">Nueva partida</button><p class="help">WASD: caminar · Flechas: mirar · Shift: correr<br>E: interactuar / salir del escondite · F: linterna<br>Q: arrojar botella · M: plano · H: repetir ayuda<br>Esc: pausa / liberar el mouse</p><div id="pauseSettings"></div></div></section>
+<section id="mapOverlay" class="overlay hidden"><div class="map-card"><span class="eyebrow">PLANO / LA AMENAZA ESTÁ EN PAUSA</span><h2 id="mapObjective">Buscá el fusible</h2><canvas id="fullMap" width="580" height="500"></canvas><p><span class="legend you">● Vos</span><span class="legend goal-mark">◆ Objetivo</span><span class="legend hide-mark">■ Escondite</span><span class="legend">··· Ruta sugerida</span></p><p class="hint">Las puertas se abren con E. Las puertas de la oficina necesitan corriente.</p><button id="closeMap" class="primary">Volver al juego →</button></div></section>
+<section id="death" class="overlay hidden"><div class="card"><span class="eyebrow">TE ENCONTRÓ</span><h2>El turno<br>todavía sigue.</h2><p id="deathAdvice">Cortá su línea de visión antes de esconderte. Las puertas y las estanterías te dan tiempo.</p><button id="retry" class="primary">Reintentar desde el último objetivo →</button><button id="deathRestart" class="secondary">Empezar de nuevo</button><small>Conservás los objetos del último punto de control.</small></div></section>
+<section id="win" class="overlay hidden"><div class="card"><span class="eyebrow">PORTÓN ABIERTO / SEÑAL RESTABLECIDA</span><h2>Saliste.</h2><p>Desde la calle escuchás un último golpe.<br>El depósito todavía no está vacío.</p><div class="results"><span id="resultTime"></span><span id="resultRetries"></span></div><button id="playAgain" class="primary">Jugar otro turno →</button></div></section>
+<div id="toast" class="hidden" role="status"></div>
+<script>
+/* Último Turno — deterministic game simulation; usable in a browser or Node. */
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.Turno=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
+'use strict';
+const W=29,H=25,TAU=Math.PI*2;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+const angle=(a,b)=>{let d=a-b;while(d>Math.PI)d-=TAU;while(d<-Math.PI)d+=TAU;return d;};
+const copy=v=>JSON.parse(JSON.stringify(v));
+const BASE=Array.from({length:H},(_,y)=>Array.from({length:W},(_,x)=>x===0||y===0||x===W-1||y===H-1?1:0));
+function line(x1,y1,x2,y2,t=1){for(let y=y1;y<=y2;y++)for(let x=x1;x<=x2;x++)BASE[y][x]=t;}
+line(10,1,10,9);line(1,9,10,9);line(19,1,19,9);line(19,9,27,9);
+for(const x of [4,10,16,22]){line(x,11,x+2,15,2);line(x,18,x+2,20,2);}
+line(19,19,19,23);line(19,19,27,19);
+const DOORS=[
+ {id:'office_s',x:5,y:9,label:'OFICINA',locked:true},
+ {id:'office_e',x:10,y:5,label:'OFICINA',locked:true},
+ {id:'workshop_s',x:23,y:9,label:'TALLER',locked:false},
+ {id:'workshop_e',x:19,y:5,label:'TALLER',locked:false},
+ {id:'utility_w',x:19,y:22,label:'TABLERO',locked:false},
+ {id:'utility_n',x:25,y:19,label:'TABLERO',locked:false}
+];
+DOORS.forEach(d=>BASE[d.y][d.x]=3);
+for(let x=3;x<=6;x++)BASE[24][x]=4;
+const OBJECTS=[
+ {id:'fuse',type:'fuse',x:25.5,y:3.5,label:'Fusible de repuesto',height:.8},
+ {id:'panel',type:'panel',x:26.5,y:21.5,label:'Tablero eléctrico',height:1.7},
+ {id:'key',type:'key',x:3.5,y:3.5,label:'Llave del portón',height:.85},
+ {id:'gate',type:'gate',x:4.5,y:23.55,label:'Portón de salida',height:2.6},
+ {id:'hide_office',type:'hide',x:8.5,y:3.5,label:'Armario de oficina',height:2.1},
+ {id:'hide_workshop',type:'hide',x:21.5,y:3.5,label:'Armario del taller',height:2.1},
+ {id:'hide_west',type:'hide',x:2.5,y:17.5,label:'Armario de limpieza',height:2.1},
+ {id:'hide_center',type:'hide',x:14.5,y:19.5,label:'Armario de mantenimiento',height:2.1},
+ {id:'hide_exit',type:'hide',x:2.5,y:22.5,label:'Armario del muelle',height:2.1},
+ {id:'bottle_start',type:'bottle',x:7.5,y:22.5,label:'Botella vacía',height:.65},
+ {id:'bottle_center',type:'bottle',x:14.5,y:17.5,label:'Botella vacía',height:.65},
+ {id:'bottle_north',type:'bottle',x:17.5,y:4.5,label:'Botella vacía',height:.65}
+];
+const PATROL=[{x:14.5,y:6.5},{x:14.5,y:10.5},{x:20.5,y:17.5},{x:8.5,y:17.5},{x:2.5,y:11.5}];
+class Game {
+ constructor(save=null){
+  this.p={x:6.5,y:22.5,a:-Math.PI/2,flash:true,stamina:100,hidden:null,hideExposed:false};
+  this.e={x:14.5,y:6.5,a:Math.PI/2,mode:'dormant',active:false,grace:0,path:[],target:null,repath:0,seenAgo:99,search:0,patrol:0,doorWait:0,knownHides:[],capture:0,inspectHide:null,nextHideCheck:0};
+  this.doors=DOORS.map(d=>({...d,open:false}));this.items={fuse:false,power:false,key:false,bottles:2};
+  this.collected=[];this.gate=0;this.gateStarted=false;this.time=0;this.status='playing';this.events=[];this.foot=0;this.noise=0;this.danger=0;this.invulnerable=0;
+  this.scareFlags={glimpse:false,power:false,key:false};this.checkpoint=null;this.deaths=0;
+  if(save)this.load(save);else this.setCheckpoint();
+ }
+ load(save){
+  if(!save||save.version!==1||!save.items||!save.doors)throw new Error('Partida incompatible.');
+  this.items={...this.items,...copy(save.items)};this.doors=this.doors.map(d=>({...d,...(save.doors.find(v=>v.id===d.id)||{})}));
+  this.collected=Array.isArray(save.collected)?copy(save.collected):[];this.scareFlags={...this.scareFlags,...save.scareFlags};
+  const p=save.p||{};if(Number.isFinite(p.x)&&Number.isFinite(p.y)&&!this.solid(p.x,p.y)){this.p.x=p.x;this.p.y=p.y;this.p.a=Number.isFinite(p.a)?p.a:-Math.PI/2;}
+  this.time=Number.isFinite(save.time)?save.time:0;this.deaths=save.deaths||0;this.e.knownHides=Array.isArray(save.knownHides)?copy(save.knownHides):[];
+  if(this.items.fuse)this.activateEnemy(14);this.setCheckpoint();
+ }
+ export(){return {version:1,items:copy(this.items),doors:copy(this.doors),collected:copy(this.collected),scareFlags:copy(this.scareFlags),p:{x:this.p.x,y:this.p.y,a:this.p.a},time:this.time,knownHides:copy(this.e.knownHides),deaths:this.deaths};}
+ setCheckpoint(){this.checkpoint=this.export();this.emit('save',{save:this.checkpoint});}
+ retry(){const next=new Game(this.checkpoint);next.deaths=this.deaths+1;next.invulnerable=3;next.events=next.events.filter(e=>e.type!=='save');next.setCheckpoint();next.emit('radio',{text:'Seguís desde el último objetivo completado. Tenés unos segundos para orientarte.'});return next;}
+ emit(type,payload={}){this.events.push({type,...payload});}
+ drain(){return this.events.splice(0);}
+ doorAt(x,y){return this.doors.find(d=>d.x===Math.floor(x)&&d.y===Math.floor(y));}
+ material(x,y){x=Math.floor(x);y=Math.floor(y);if(x<0||y<0||x>=W||y>=H)return 1;const t=BASE[y][x];if(t===3)return this.doorAt(x,y).open?0:3;if(t===4)return this.gate>=1?0:4;return t;}
+ solid(x,y){return this.material(x,y)!==0;}
+ nav(x,y){if(x<1||y<1||x>=W-1||y>=H-1)return false;const t=BASE[y][x];return t===0||(t===3&&!this.doorAt(x,y).locked);}
+ clear(x,y,r=.2){return !this.solid(x-r,y-r)&&!this.solid(x+r,y-r)&&!this.solid(x-r,y+r)&&!this.solid(x+r,y+r);}
+ los(a,b,ignoreEnd=false){const d=distance(a,b),steps=Math.ceil(d/.08);for(let i=1;i<steps;i++){const t=i/steps,x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t;if(ignoreEnd&&Math.floor(x)===Math.floor(b.x)&&Math.floor(y)===Math.floor(b.y))continue;if(this.solid(x,y))return false;}return true;}
+ path(from,to){
+  const start={x:Math.floor(from.x),y:Math.floor(from.y)},goal={x:Math.floor(to.x),y:Math.floor(to.y)};
+  if(!this.nav(goal.x,goal.y))return [];
+  const key=(x,y)=>y*W+x,parents=new Map([[key(start.x,start.y),null]]),queue=[start];let found=false;
+  for(let head=0;head<queue.length;head++){
+   const p=queue[head];if(p.x===goal.x&&p.y===goal.y){found=true;break;}
+   for(const [dx,dy] of [[0,-1],[1,0],[0,1],[-1,0]]){const x=p.x+dx,y=p.y+dy,k=key(x,y);if(this.nav(x,y)&&!parents.has(k)){parents.set(k,p);queue.push({x,y});}}
+  }
+  if(!found)return [];const result=[];let cur=goal;
+  while(cur&&!(cur.x===start.x&&cur.y===start.y)){result.push({x:cur.x+.5,y:cur.y+.5});cur=parents.get(key(cur.x,cur.y));}
+  return result.reverse();
+ }
+ objective(){
+  if(this.status==='won')return {id:'won',title:'Saliste del depósito',detail:'El turno terminó.',target:null};
+  if(!this.items.fuse)return {id:'fuse',title:'1 · Buscá el fusible en el taller',detail:'Seguí la flecha amarilla. Abrí las puertas con E.',target:OBJECTS[0]};
+  if(!this.items.power)return {id:'panel',title:'2 · Colocá el fusible en el tablero',detail:'El tablero está en el cuarto eléctrico, junto al muelle.',target:OBJECTS[1]};
+  if(!this.items.key)return {id:'key',title:'3 · Buscá la llave en la oficina',detail:'La corriente liberó las puertas de la oficina.',target:OBJECTS[2]};
+  if(!this.gateStarted)return {id:'gate',title:'4 · Activá el portón de salida',detail:'Volvé al muelle. El motor va a hacer ruido.',target:OBJECTS[3]};
+  if(this.gate<1)return {id:'wait',title:'El portón está subiendo · buscá cobertura',detail:'Podés alejarte o esconderte mientras termina de abrir.',target:OBJECTS[3]};
+  return {id:'exit',title:'¡Salí por el portón!',detail:'Acercate al portón y presioná E, o cruzalo.',target:OBJECTS[3]};
+ }
+ zone(){const p=this.p;if(p.y<9&&p.x<10)return 'OFICINA';if(p.y<9&&p.x>19)return 'TALLER';if(p.x>19&&p.y>19)return 'CUARTO ELÉCTRICO';if(p.y>20)return 'MUELLE DE CARGA';return 'DEPÓSITO';}
+ available(){return OBJECTS.filter(o=>!(o.type==='fuse'&&this.items.fuse)&&!(o.type==='key'&&this.items.key)&&!(o.type==='bottle'&&this.collected.includes(o.id)));}
+ interactable(){
+  if(this.p.hidden)return {id:this.p.hidden,type:'leave_hide',label:'Salir del escondite'};
+  const candidates=this.available().concat(this.doors.map(d=>({id:d.id,type:'door',x:d.x+.5,y:d.y+.5,label:d.label,door:d})));
+  return candidates.map(o=>({...o,d:distance(this.p,o)})).filter(o=>o.d<1.75&&Math.abs(angle(Math.atan2(o.y-this.p.y,o.x-this.p.x),this.p.a))<1.25&&this.los(this.p,o,o.type==='door')).sort((a,b)=>a.d-b.d)[0]||null;
+ }
+ prompt(){const o=this.interactable();if(!o)return null;
+  if(o.type==='door')return {object:o,text:o.door.locked?'Oficina sin corriente · primero repará el tablero':`E · ${o.door.open?'Cerrar':'Abrir'} puerta · ${o.label}`};
+  if(o.type==='hide')return {object:o,text:'E · Esconderte · '+o.label};
+  if(o.type==='leave_hide')return {object:o,text:'E · Salir del escondite'};
+  if(o.type==='panel')return {object:o,text:this.items.power?'Corriente restablecida':this.items.fuse?'E · Colocar fusible y dar corriente':'Falta el fusible del taller'};
+  if(o.type==='gate')return {object:o,text:this.gate>=1?'E · Escapar':this.gateStarted?'El portón está subiendo…':!this.items.power?'El portón necesita corriente':!this.items.key?'Falta la llave de la oficina':'E · Abrir el portón'};
+  return {object:o,text:'E · Recoger '+(o.type==='fuse'?'fusible':o.type==='key'?'llave':'botella')};
+ }
+ interact(){
+  if(this.status!=='playing')return false;const o=this.interactable();if(!o){this.emit('hint',{text:'Acercate y mirá el objeto. La pantalla te indica cuándo podés usar E.'});return false;}
+  if(o.type==='leave_hide'){this.p.hidden=null;this.p.hideExposed=false;this.invulnerable=.6;this.emit('hide',{active:false});return true;}
+  if(o.type==='door'){
+   if(o.door.locked){this.emit('hint',{text:'La cerradura eléctrica está bloqueada. Primero repará el tablero.'});return false;}
+   if(o.door.open&&Math.floor(this.p.x)===o.door.x&&Math.floor(this.p.y)===o.door.y){this.emit('hint',{text:'Apartate del marco para cerrar la puerta.'});return false;}
+   if(o.door.open&&this.e.active&&Math.floor(this.e.x)===o.door.x&&Math.floor(this.e.y)===o.door.y){this.emit('hint',{text:'Hay alguien en el marco. ¡Alejate de esa puerta!'});return false;}
+   o.door.open=!o.door.open;this.makeNoise(o,7);this.emit('sound',{name:'door',pos:o});return true;
+  }
+  if(o.type==='hide'){
+   const seen=this.e.active&&this.e.grace<=0&&distance(this.p,this.e)<13&&this.los(this.e,this.p)&&(this.e.mode==='chase'||this.canSeePlayer());
+   this.p.hidden=o.id;this.p.flash=false;this.p.hideExposed=seen;
+   if(seen&&!this.e.knownHides.includes(o.id))this.e.knownHides.push(o.id);
+   if(this.p.hideExposed){this.e.target={x:this.p.x,y:this.p.y};this.e.mode='investigate';this.e.repath=0;}
+   this.emit('hide',{active:true});this.emit('hint',{text:seen?'Te vio entrar en este escondite. ¡Salí y buscá otro!':this.e.knownHides.includes(o.id)?'Ya conoce este escondite: puede volver a revisarlo. Escuchá los pasos.':'Estás oculto. Escuchá sus pasos y esperá a que se aleje.'});return true;
+  }
+  if(o.type==='bottle'){
+   if(this.items.bottles>=3){this.emit('hint',{text:'Ya tenés tres botellas. Usá Q para distraerlo.'});return false;}
+   this.items.bottles++;this.collected.push(o.id);this.emit('sound',{name:'pickup'});this.emit('hint',{text:'Botella recogida. Q la arroja hacia donde mirás.'});return true;
+  }
+  if(o.type==='fuse'){
+   this.items.fuse=true;this.activateEnemy(12);this.emit('sound',{name:'clang',pos:{x:17.5,y:8.5}});this.emit('scare',{kind:'fuse',seconds:.35});
+   this.emit('radio',{text:'Bien. Llevá el fusible al tablero del muelle.'});this.setCheckpoint();return true;
+  }
+  if(o.type==='panel'){
+   if(this.items.power){this.emit('hint',{text:'El tablero ya funciona. Seguí el objetivo de arriba.'});return false;}
+   if(!this.items.fuse){this.emit('hint',{text:'Necesitás el fusible de repuesto del taller.'});return false;}
+   this.items.power=true;this.doors.filter(d=>d.id.startsWith('office')).forEach(d=>d.locked=false);this.scareFlags.power=true;
+   this.makeNoise(o,45);this.emit('sound',{name:'power',pos:o});this.emit('scare',{kind:'power',seconds:1.1});
+   this.emit('radio',{text:'Volvió la luz. La llave está en la oficina.'});this.setCheckpoint();return true;
+  }
+  if(o.type==='key'){
+   if(!this.items.power){this.emit('hint',{text:'Primero restablecé la corriente.'});return false;}
+   this.items.key=true;this.emit('sound',{name:'pickup'});this.emit('radio',{text:'Ahora sí. Volvé al portón.'});this.setCheckpoint();return true;
+  }
+  if(o.type==='gate'){
+   if(this.gate>=1){this.win();return true;}
+   if(!this.items.power||!this.items.key){this.emit('hint',{text:!this.items.power?'Restablecé la corriente para mover el portón.':'Buscá la llave en la oficina.'});return false;}
+   if(this.gateStarted)return false;
+   this.gateStarted=true;this.makeNoise(o,60);this.e.grace=Math.max(this.e.grace,1.5);this.emit('sound',{name:'gate',pos:o});
+   this.emit('radio',{text:'Está subiendo. Buscá dónde cubrirte.'});return true;
+  }
+  return false;
+ }
+ activateEnemy(grace=0){this.e.active=true;this.e.mode='patrol';this.e.grace=grace;this.e.target=copy(PATROL[0]);}
+ toggleFlash(){if(this.p.hidden){this.emit('hint',{text:'La linterna queda apagada mientras estás escondido.'});return;}this.p.flash=!this.p.flash;this.emit('sound',{name:'switch'});}
+ throwBottle(){
+  if(this.status!=='playing'||this.p.hidden)return false;
+  if(!this.items.bottles){this.emit('hint',{text:'No quedan botellas. Podés recoger las que encuentres.'});return false;}
+  let target={x:this.p.x,y:this.p.y};for(let d=.5;d<=6;d+=.15){const n={x:this.p.x+Math.cos(this.p.a)*d,y:this.p.y+Math.sin(this.p.a)*d};if(this.solid(n.x,n.y))break;target=n;}
+  this.items.bottles--;this.makeNoise(target,22);this.emit('bottle',{pos:target});this.emit('sound',{name:'glass',pos:target});this.emit('hint',{text:'La botella se rompió. Alejate del ruido.'});return true;
+ }
+ makeNoise(pos,radius){
+  this.noise=1;
+  if(!this.e.active)return;const path=this.path(this.e,pos);
+  if((path.length||distance(this.e,pos)<1)&&path.length<=radius&&!(this.e.mode==='chase'&&this.e.seenAgo<1)){
+   this.e.target={x:pos.x,y:pos.y};this.e.mode='investigate';this.e.repath=0;this.e.search=7;
+  }
+ }
+ canSeePlayer(){
+  if(this.p.hidden)return false;const d=distance(this.e,this.p),max=this.items.power?10:this.p.flash?12:4.3;
+  return d<max&&(d<2.3||Math.abs(angle(Math.atan2(this.p.y-this.e.y,this.p.x-this.e.x),this.e.a))<1.22)&&this.los(this.e,this.p);
+ }
+ movePlayer(dt,input){
+  this.p.a+=clamp(input.turn||0,-1,1)*dt*1.9+(input.mouse||0);
+  if(this.p.hidden)return;
+  let f=clamp(input.forward||0,-1,1),s=clamp(input.strafe||0,-1,1);const len=Math.hypot(f,s);if(len>1){f/=len;s/=len;}
+  const sprint=input.sprint&&this.p.stamina>3&&len>.1,speed=sprint?3.95:2.35;
+  this.p.stamina=clamp(this.p.stamina+(sprint?-17:16)*dt,0,100);
+  const dx=(Math.cos(this.p.a)*f-Math.sin(this.p.a)*s)*speed*dt,dy=(Math.sin(this.p.a)*f+Math.cos(this.p.a)*s)*speed*dt;
+  const old={x:this.p.x,y:this.p.y};if(this.clear(this.p.x+dx,this.p.y))this.p.x+=dx;if(this.clear(this.p.x,this.p.y+dy))this.p.y+=dy;
+  const moved=distance(old,this.p);this.foot+=moved;
+  if(this.foot>(sprint?.85:1.3)){this.foot=0;this.emit('sound',{name:'step',pos:this.p});this.makeNoise(this.p,sprint?13:2);}
+ }
+ updateEnemy(dt){
+  const e=this.e;if(!e.active)return;e.grace=Math.max(0,e.grace-dt);e.seenAgo+=dt;
+  if(e.grace<=0&&this.canSeePlayer()){
+   const fresh=e.mode!=='chase';e.mode='chase';e.target={x:this.p.x,y:this.p.y};e.seenAgo=0;e.repath=Math.min(e.repath,.2);if(fresh)this.emit('chase',{active:true});
+  }
+  if(e.mode==='chase'&&e.seenAgo>2.6){e.mode='investigate';e.search=8;this.emit('chase',{active:false});}
+  if(e.mode==='patrol'&&this.time>e.nextHideCheck){
+   const spot=OBJECTS.find(o=>e.knownHides.includes(o.id)&&distance(e,o)<6);
+   e.nextHideCheck=this.time+16;
+   if(spot){e.inspectHide=spot.id;e.target={x:spot.x,y:spot.y};e.mode='investigate';e.search=5;e.repath=0;}
+  }
+  if(e.inspectHide){const spot=OBJECTS.find(o=>o.id===e.inspectHide);if(spot&&distance(e,spot)<1.1){
+   if(this.p.hidden===spot.id){this.p.hideExposed=true;e.target={x:this.p.x,y:this.p.y};e.repath=0;this.emit('hint',{text:'Está revisando el escondite que ya conoce. ¡Salí!'});}
+   e.inspectHide=null;
+  }}
+  if(this.p.hidden&&this.p.hideExposed){e.target={x:this.p.x,y:this.p.y};e.mode='investigate';}
+  if(!e.target)e.target=copy(PATROL[e.patrol%PATROL.length]);
+  e.repath-=dt;
+  if(e.repath<=0){e.path=this.path(e,e.target);e.repath=e.mode==='chase'?.35:1.1;}
+  if(e.path.length){
+   const next=e.path[0],d=distance(e,next),door=this.doorAt(next.x,next.y);
+   if(door&&!door.open){e.doorWait+=dt;if(e.doorWait>1.4){door.open=true;e.doorWait=0;this.emit('sound',{name:'door',pos:next});}}
+   else {e.doorWait=0;const speed=e.grace>0?.85:e.mode==='chase'?2.2:e.mode==='investigate'?(this.gateStarted?2.15:1.4):1.0,step=Math.min(d,speed*dt);
+    if(d>.001){e.a=Math.atan2(next.y-e.y,next.x-e.x);const nx=e.x+(next.x-e.x)/d*step,ny=e.y+(next.y-e.y)/d*step;if(this.clear(nx,e.y,.16))e.x=nx;if(this.clear(e.x,ny,.16))e.y=ny;}
+    if(d<.13)e.path.shift();
+   }
+  }else if(distance(e,e.target)<1.25){
+   if(e.mode==='investigate'){e.search-=dt;e.a+=dt*.7;if(e.search<=0){e.mode='patrol';e.patrol=(e.patrol+1)%PATROL.length;e.target=copy(PATROL[e.patrol]);e.repath=0;}}
+   else if(e.mode==='patrol'){e.patrol=(e.patrol+1)%PATROL.length;e.target=copy(PATROL[e.patrol]);e.repath=0;}
+  }
+  const d=distance(e,this.p),visible=this.los(e,this.p);
+  this.danger=clamp(1-d/10,0,1)*(visible?1:.55);
+  if(e.grace<=0&&this.invulnerable<=0&&d<.8&&visible&&(!this.p.hidden||this.p.hideExposed)){e.capture+=dt;if(e.capture>.4)this.die();}else e.capture=0;
+ }
+ update(dt,input={}){
+  if(this.status!=='playing')return;dt=clamp(dt,0,.06);this.time+=dt;this.invulnerable=Math.max(0,this.invulnerable-dt);this.noise=Math.max(0,this.noise-dt*.65);
+  this.movePlayer(dt,input);this.updateEnemy(dt);
+  if(this.gateStarted&&this.gate<1){this.gate=Math.min(1,this.gate+dt/10);if(this.gate>=1){this.emit('sound',{name:'gate_end'});this.emit('radio',{text:'¡Está abierto! Volvé al muelle y salí por el portón.'});}}
+  if(this.gate>=1&&this.p.y>23.7&&this.p.x>3&&this.p.x<7)this.win();
+  if(!this.scareFlags.glimpse&&this.time>16&&!this.items.fuse){this.scareFlags.glimpse=true;this.emit('sound',{name:'clang',pos:{x:14.5,y:6.5}});this.emit('radio',{text:'¿Escuchaste eso? Pensé que estábamos solos.'});}
+ }
+ die(){if(this.status!=='playing')return;this.status='dead';this.emit('death');}
+ win(){if(this.status!=='playing')return;this.status='won';this.emit('win');}
+}
+return {Game,W,H,BASE,DOORS,OBJECTS,PATROL,angle,distance,clamp};
+});
+
+</script><script>
+'use strict';
+const $=id=>document.getElementById(id),{Game,W,H,BASE,OBJECTS,DOORS,angle,distance,clamp}=Turno;
+const canvas=$('view'),ctx=canvas.getContext('2d'),SAVE_KEY='ultimo-turno-v1';
+let game=new Game(),started=false,paused=true,keys={},mouse=0,mouseY=0,lookPitch=0,lastFrame=0,radioUntil=0,toastUntil=0,flickerUntil=0,deathUntil=0,enemyStep=0,tutorial=0,route=[],routeAt=0,saveData=null;
+const textures={},sprites={},settings=document.querySelector('.settings'),settingsParent=settings.parentElement,settingsNext=settings.nextElementSibling;
+const audio={ac:null,master:null,hum:null};
+function toast(text,seconds=4){$('toast').textContent=text;$('toast').classList.remove('hidden');toastUntil=performance.now()+seconds*1000;}
+function readSave(){try{const raw=localStorage.getItem(SAVE_KEY);return raw?JSON.parse(raw):null;}catch(e){return null;}}
+function writeSave(save){try{localStorage.setItem(SAVE_KEY,JSON.stringify(save));saveData=save;}catch(e){toast('El navegador no permitió guardar. Podés seguir jugando y reintentar en esta sesión.');}}
+function eraseSave(){try{localStorage.removeItem(SAVE_KEY);}catch(e){}saveData=null;}
+saveData=readSave();if(saveData&&saveData.version===1)$('continue').classList.remove('hidden');
+function resize(){const w=Math.min(960,Math.max(640,window.innerWidth));canvas.width=w;canvas.height=Math.round(w*window.innerHeight/window.innerWidth);}
+window.addEventListener('resize',resize);resize();
+if(matchMedia('(prefers-reduced-motion: reduce)').matches)$('effects').checked=false;
+function setupAudio(){
+ if(audio.ac){audio.ac.resume();return;}
+ try{const AC=window.AudioContext||window.webkitAudioContext;audio.ac=new AC();audio.master=audio.ac.createGain();audio.master.gain.value=$('sound').checked?Number($('volume').value):0;audio.master.connect(audio.ac.destination);
+  const hum=audio.ac.createGain();hum.gain.value=.027;hum.connect(audio.master);audio.hum=hum;
+  for(const f of [43,67]){const o=audio.ac.createOscillator();o.type='sine';o.frequency.value=f;o.connect(hum);o.start();}
+ }catch(e){audio.ac=null;}
+}
+function sound(name,pos=null){
+ if(!audio.ac||!$('sound').checked)return;const ac=audio.ac,t=ac.currentTime,amp=ac.createGain(),pan=ac.createStereoPanner();
+ let vol=.14,dur=.15,f=75,noise=false;
+ const spec={step:[.065,.08,68,false],enemy:[.17,.13,52,false],door:[.24,.32,85,true],pickup:[.08,.18,520,false],switch:[.04,.035,1200,true],clang:[.33,.9,150,true],glass:[.2,.55,1500,true],power:[.25,1.1,120,true],gate:[.23,1.6,60,true],gate_end:[.28,.5,65,true],death:[.75,.7,100,true]};
+ [vol,dur,f,noise]=spec[name]||[vol,dur,f,noise];
+ if(pos){const d=distance(game.p,pos);vol*=clamp(1-d/28,.08,1);pan.pan.value=clamp(Math.sin(angle(Math.atan2(pos.y-game.p.y,pos.x-game.p.x),game.p.a)),-1,1);}else pan.pan.value=0;
+ amp.gain.setValueAtTime(.001,t);amp.gain.exponentialRampToValueAtTime(vol,t+.012);amp.gain.exponentialRampToValueAtTime(.001,t+dur);amp.connect(pan);pan.connect(audio.master);
+ if(noise){const buffer=ac.createBuffer(1,Math.ceil(ac.sampleRate*dur),ac.sampleRate),data=buffer.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*(1-i/data.length);const source=ac.createBufferSource(),filter=ac.createBiquadFilter();filter.type='lowpass';filter.frequency.value=f*7;source.buffer=buffer;source.connect(filter);filter.connect(amp);source.start(t);source.stop(t+dur);}else{const o=ac.createOscillator();o.type='triangle';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(Math.max(22,f*.35),t+dur);o.connect(amp);o.start(t);o.stop(t+dur);}
+}
+function radio(text){
+ $('radioText').textContent=text;$('radio').style.opacity='1';radioUntil=performance.now()+Math.min(7000,2000+text.length*45);
+ if($('sound').checked&&$('voice').checked&&'speechSynthesis'in window){speechSynthesis.cancel();const voice=speechSynthesis.getVoices().filter(v=>v.lang.startsWith('es')&&v.localService).sort((a,b)=>(/Natural|Neural|Google|Elena|Sabina/i.test(b.name)?1:0)-(/Natural|Neural|Google|Elena|Sabina/i.test(a.name)?1:0))[0];if(voice){const u=new SpeechSynthesisUtterance(text);u.lang=voice.lang;u.voice=voice;u.rate=1;u.pitch=1;u.volume=Number($('volume').value)*.9;speechSynthesis.speak(u);}}
+}
+function processEvents(){
+ for(const event of game.drain()){
+  if(event.type==='sound')sound(event.name,event.pos);
+  if(event.type==='hint')toast(event.text,5);
+  if(event.type==='radio')radio(event.text);
+  if(event.type==='save')writeSave(event.save);
+  if(event.type==='chase'&&event.active)toast('Te vio. ¡Corré y cortá su línea de visión!',3);
+  if(event.type==='scare')flickerUntil=performance.now()+event.seconds*1000;
+  if(event.type==='hide')keys={};
+  if(event.type==='death'){sound('death');deathUntil=performance.now()+700;keys={};document.exitPointerLock?.();window.speechSynthesis?.cancel();setTimeout(()=>{$('deathAdvice').textContent=game.p.hideExposed?'Te vio entrar en ese escondite. Primero doblá una esquina o cerrá una puerta; después escondete.':'Cortá su línea de visión entre las estanterías. Podés cerrar puertas o distraerlo con Q.';$('death').classList.remove('hidden');paused=true;},750);}
+  if(event.type==='win'){paused=true;keys={};document.exitPointerLock?.();eraseSave();$('win').classList.remove('hidden');$('resultTime').textContent=`TIEMPO ${Math.floor(game.time/60)}:${String(Math.floor(game.time%60)).padStart(2,'0')}`;$('resultRetries').textContent=`REINTENTOS ${game.deaths}`;radio('Ya estás afuera. No vuelvas a entrar.');}
+ }
+}
+function startGame(saved=null){
+ try{game=new Game(saved);}catch(e){game=new Game();toast('La partida guardada no pudo abrirse. Comenzó un turno nuevo.');}
+ started=true;paused=false;keys={};tutorial=3;lookPitch=0;mouse=mouseY=0;routeAt=0;setupAudio();
+ for(const id of ['intro','pause','death','win','mapOverlay'])$(id).classList.add('hidden');$('hud').classList.remove('hidden');
+ settingsParent.insertBefore(settings,settingsNext);$('tutorial').classList.add('hidden');
+ processEvents();radio(saved?'Seguís desde el último punto de control.':'Estoy acá. Primero necesitamos el fusible del taller.');canvas.focus();
+}
+function restart(){if(!confirm('¿Empezar un turno nuevo y borrar el punto de control?'))return;eraseSave();startGame();}
+$('start').onclick=()=>{if(saveData&&!confirm('¿Comenzar un turno nuevo y borrar la partida guardada?'))return;startGame();};
+$('continue').onclick=()=>startGame(saveData);
+$('restart').onclick=restart;$('deathRestart').onclick=restart;$('playAgain').onclick=()=>startGame();
+$('retry').onclick=()=>{game=game.retry();paused=false;keys={};deathUntil=0;routeAt=0;$('death').classList.add('hidden');processEvents();canvas.focus();};
+function pauseGame(){if(!started||game.status!=='playing')return;paused=true;keys={};document.exitPointerLock?.();$('pause').classList.remove('hidden');$('pauseSettings').append(settings);}
+function resumeGame(){if(game.status!=='playing')return;paused=false;keys={};$('pause').classList.add('hidden');$('mapOverlay').classList.add('hidden');canvas.focus();}
+function showMap(){if(!started||game.status!=='playing')return;paused=true;keys={};document.exitPointerLock?.();$('pause').classList.add('hidden');$('mapObjective').textContent=game.objective().title;drawMap($('fullMap'),true);$('mapOverlay').classList.remove('hidden');}
+$('pauseButton').onclick=pauseGame;$('resume').onclick=resumeGame;$('pauseMap').onclick=showMap;$('mapButton').onclick=showMap;$('closeMap').onclick=resumeGame;
+$('useButton').onclick=()=>{if(!paused){game.interact();processEvents();}};
+$('flashButton').onclick=()=>{if(!paused){game.toggleFlash();processEvents();tutorial=Math.max(1,tutorial);}};
+$('bottleButton').onclick=()=>{if(!paused){game.throwBottle();processEvents();}};
+$('hintButton').onclick=()=>radio(game.objective().detail+' '+(game.objective().id==='fuse'?'El taller está arriba a la derecha en el plano.':game.objective().id==='panel'?'El cuarto eléctrico está abajo a la derecha.':game.objective().id==='key'?'La oficina está arriba a la izquierda.':'El portón está abajo a la izquierda.'));
+$('skipTutorial').onclick=()=>{tutorial++;if(tutorial>2)$('tutorial').classList.add('hidden');};
+function refreshVolume(){if(audio.master)audio.master.gain.value=$('sound').checked?Number($('volume').value):0;if(!$('sound').checked)window.speechSynthesis?.cancel();}
+$('volume').oninput=refreshVolume;$('sound').onchange=refreshVolume;$('voice').onchange=()=>{if(!$('voice').checked&&'speechSynthesis'in window)speechSynthesis.cancel();};
+window.addEventListener('keydown',e=>{
+ if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName))return;const k=e.key.toLowerCase();if(['arrowup','arrowdown','arrowleft','arrowright',' '].includes(k))e.preventDefault();
+ if(k==='escape'&&!e.repeat){if(!$('mapOverlay').classList.contains('hidden'))resumeGame();else if(!$('pause').classList.contains('hidden'))resumeGame();else pauseGame();return;}
+ if(!started||game.status!=='playing')return;
+ if(k==='m'&&!e.repeat){$('mapOverlay').classList.contains('hidden')?showMap():resumeGame();return;}
+ if(paused)return;keys[k]=true;if(e.repeat)return;
+ if(k==='e'){game.interact();processEvents();tutorial=Math.max(2,tutorial);}
+ if(k==='f'){game.toggleFlash();processEvents();tutorial=Math.max(1,tutorial);}
+ if(k==='q'){game.throwBottle();processEvents();}
+ if(k==='h')$('hintButton').click();
+});
+window.addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false;});
+window.addEventListener('blur',()=>{keys={};if(started&&!paused)pauseGame();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&started&&!paused)pauseGame();});
+canvas.onclick=()=>{if(started&&!paused&&game.status==='playing'){canvas.focus();const p=canvas.requestPointerLock?.();if(p&&p.catch)p.catch(()=>toast('Podés mirar con las flechas izquierda y derecha.'));}};
+document.addEventListener('mousemove',e=>{if(document.pointerLockElement===canvas&&!paused){mouse+=e.movementX*.0021;mouseY-=e.movementY*.0018;}});
+for(const button of document.querySelectorAll('[data-control]')){
+ const control=button.dataset.control,k=control==='forward'?'w':control==='turnLeft'?'arrowleft':'arrowright';
+ button.onpointerdown=e=>{e.preventDefault();button.setPointerCapture(e.pointerId);keys[k]=true;};button.onpointerup=button.onpointercancel=()=>{keys[k]=false;};
+}
+function updateHUD(now){
+ const objective=game.objective();$('objective').textContent=objective.title;$('objectiveDetail').textContent=objective.detail;$('zone').textContent=game.zone();
+ document.querySelectorAll('.progress i').forEach((el,i)=>el.classList.toggle('done',i<([game.items.fuse,game.items.power,game.items.key,game.gate>=1].filter(Boolean).length)));
+ $('fuseIcon').classList.toggle('owned',game.items.fuse);$('keyIcon').classList.toggle('owned',game.items.key);$('bottleIcon').textContent=`Q · BOTELLAS ${game.items.bottles}`;$('staminaBar').style.width=game.p.stamina+'%';
+ $('flashButton').textContent='F · Linterna '+(game.p.flash?'encendida':'apagada');
+ const prompt=game.prompt();$('interaction').classList.toggle('hidden',!prompt||paused);if(prompt)$('interactionText').textContent=prompt.text.replace(/^E · /,'');
+ $('hideBanner').classList.toggle('hidden',!game.p.hidden);$('crosshair').classList.toggle('hidden',!!game.p.hidden);
+ $('hideBanner').querySelector('b').textContent=game.p.hideExposed?'TE VIO ESCONDERTE':'ESTÁS OCULTO';
+ $('dangerText').textContent=game.e.mode==='chase'?'¡TE ESTÁ PERSIGUIENDO!':game.danger>.65?'PASOS MUY CERCA':game.danger>.3?'ESCUCHÁS PASOS':'ESCUCHÁ EL DEPÓSITO';
+ $('dangerText').style.color=game.e.mode==='chase'?'#f49b7f':game.danger>.3?'#e6c671':'#abb3ab';$('redEdge').style.opacity=game.e.mode==='chase'?'.25':'0';
+ if(now>routeAt){route=objective.target?game.path(game.p,objective.target):[];routeAt=now+600;drawMap($('miniMap'),false);}
+ const waypoint=route.find(p=>distance(game.p,p)>.8)||objective.target;
+ if(waypoint){const a=angle(Math.atan2(waypoint.y-game.p.y,waypoint.x-game.p.x),game.p.a);$('compassArrow').style.transform=`rotate(${a*180/Math.PI}deg)`;}
+ $('compassText').textContent=objective.id==='fuse'?'TALLER':objective.id==='panel'?'TABLERO':objective.id==='key'?'OFICINA':'SALIDA';$('compassDistance').textContent=route.length?Math.round(route.length)+' m':'';
+ $('radio').style.opacity=now<radioUntil?'1':'0';$('toast').classList.toggle('hidden',now>toastUntil);
+ if(tutorial<3){$('tutorial').classList.remove('hidden');const instructions=[['Movete con W A S D','Las flechas izquierda y derecha giran la vista. También podés hacer clic para mirar con el mouse.'],['F enciende o apaga la linterna','La luz ayuda a ver, pero también puede delatarte. La amenaza se escucha antes de acercarse.'],['E usa lo que tenés delante','Acercate a una puerta u objeto y miralo. M abre el plano con la ruta al objetivo.']];$('tutorialTitle').textContent=instructions[tutorial][0];$('tutorialText').textContent=instructions[tutorial][1];}
+}
+
+function texture(type){
+ const c=document.createElement('canvas');c.width=c.height=64;const g=c.getContext('2d');
+ g.fillStyle=type===1?'#6e7770':type===2?'#3e493c':type===3?'#596d69':'#708172';g.fillRect(0,0,64,64);
+ for(let i=0;i<700;i++){const x=(i*37)%64,y=(i*19+Math.floor(i/64)*11)%64;g.fillStyle=i%3?'#00000014':'#ffffff10';g.fillRect(x,y,1,2);}
+ if(type===1){g.fillStyle='#222e2c';g.fillRect(0,0,2,64);g.fillRect(0,49,64,2);g.fillStyle='#818a78';g.fillRect(2,12,60,1);}
+ if(type===2){for(let y=8;y<64;y+=17){g.fillStyle='#202921';g.fillRect(0,y+13,64,4);for(let x=3;x<64;x+=19){g.fillStyle=x%2?'#9a8059':'#7b704b';g.fillRect(x,y,16,13);g.fillStyle='#beae77';g.fillRect(x+7,y,2,13);g.fillStyle='#2d362f';g.fillRect(x+4,y+5,5,3);}}g.fillStyle='#89977d';g.fillRect(0,0,3,64);g.fillRect(61,0,3,64);}
+ if(type===3){g.fillStyle='#21332c';g.fillRect(5,3,54,59);g.strokeStyle='#95a593';g.lineWidth=1;g.strokeRect(7,5,50,54);g.fillStyle='#b7c4a8';g.fillRect(43,30,7,2);g.fillStyle='#8f9e91';g.fillRect(15,12,34,6);}
+ if(type===4){for(let y=0;y<64;y+=5){g.fillStyle='#33463b';g.fillRect(0,y,64,1);g.fillStyle='#a0ad93';g.fillRect(0,y+1,64,1);}g.fillStyle='#cbb662';g.fillRect(0,0,64,5);}
+ return c;
+}
+for(let type=1;type<=4;type++)textures[type]=texture(type);
+function sprite(type){
+ const c=document.createElement('canvas');c.width=240;c.height=360;const g=c.getContext('2d');
+ const poly=(p,color)=>{g.fillStyle=color;g.beginPath();p.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y));g.closePath();g.fill();};
+ if(type==='enemy'){
+  poly([[57,350],[107,350],[116,254],[135,350],[185,350],[155,209],[91,208]],'#171e20');poly([[84,112],[48,245],[86,258],[105,175],[146,247],[187,237],[155,112]],'#354039');poly([[115,111],[152,115],[164,267],[111,276]],'#202c29');
+  g.fillStyle='#211f1a';g.beginPath();g.ellipse(120,73,35,47,0,0,Math.PI*2);g.fill();poly([[83,50],[99,22],[136,22],[158,54],[150,107],[92,110]],'#828778');g.fillStyle='#121f1d';g.fillRect(92,56,56,19);g.fillStyle='#c9cc9f';g.fillRect(103,65,7,2);g.fillStyle='#38423a';g.fillRect(108,87,27,4);g.fillRect(108,96,27,3);
+  g.fillStyle='#8c9580';g.fillRect(65,240,16,29);g.fillRect(169,234,15,31);g.fillStyle='#1a2726';g.fillRect(179,246,7,77);g.fillStyle='#a9aea0';g.fillRect(175,301,17,37);
+ }else if(type==='hide'){
+  g.fillStyle='#243c35';g.fillRect(37,22,171,330);g.fillStyle='#426158';g.fillRect(46,27,153,314);g.strokeStyle='#819481';g.strokeRect(47,29,74,308);g.strokeRect(123,29,73,308);g.fillStyle='#a6b89b';g.fillRect(106,157,5,24);g.fillRect(136,157,5,24);for(let y=48;y<93;y+=7){g.fillStyle='#243b32';g.fillRect(57,y,50,2);g.fillRect(137,y,50,2);}g.fillStyle='#bbc4a5';g.font='12px monospace';g.fillText('MANT.',58,130);
+ }else if(type==='fuse'||type==='key'){
+  poly([[38,342],[56,342],[62,233],[185,233],[191,342],[206,342],[199,217],[45,217]],'#4c5a45');g.fillStyle='#8e8d6d';g.fillRect(35,197,174,24);g.fillStyle='#acae8a';g.fillRect(35,197,174,5);
+  if(type==='fuse'){g.fillStyle='#cbbc76';g.fillRect(87,154,67,40);g.fillStyle='#c45733';g.fillRect(94,159,52,30);g.fillStyle='#ece6b0';g.fillRect(104,165,31,15);g.fillStyle='#3f5043';g.fillRect(86,151,69,6);}
+  else {g.strokeStyle='#edc665';g.lineWidth=7;g.beginPath();g.arc(105,175,12,0,Math.PI*2);g.stroke();g.fillStyle='#edc665';g.fillRect(114,174,47,6);g.fillRect(147,174,6,15);g.fillRect(158,174,6,11);}
+ }else if(type==='panel'){
+  g.fillStyle='#354b43';g.fillRect(39,52,164,259);g.fillStyle='#607466';g.fillRect(46,58,149,245);g.strokeStyle='#9ca785';g.strokeRect(53,72,134,199);g.fillStyle='#d1bc65';g.fillRect(60,89,120,31);g.fillStyle='#3c4230';g.font='15px monospace';g.fillText('PELIGRO',70,111);g.fillStyle='#213a31';g.fillRect(79,150,71,60);g.fillStyle=game.items.power?'#b1d388':'#ad6740';g.fillRect(101,163,30,29);g.fillStyle='#c2c49d';g.fillRect(163,160,8,37);g.font='12px monospace';g.fillStyle='#d2d1ac';g.fillText('TABLERO',75,251);
+ }else if(type==='bottle'){
+  g.fillStyle='#7b9d6c';g.fillRect(103,247,33,92);g.fillRect(110,227,19,34);g.fillStyle='#284331';g.fillRect(108,232,5,95);g.fillStyle='#c1bd83';g.fillRect(106,278,27,31);g.fillStyle='#a9c294';g.fillRect(110,226,19,5);
+ }else if(type==='sign'){
+  g.fillStyle='#1f3b31';g.fillRect(15,130,210,110);g.strokeStyle='#d8c978';g.lineWidth=3;g.strokeRect(20,135,200,100);g.fillStyle='#d8c978';g.font='bold 23px monospace';g.textAlign='center';g.fillText('SALIDA',120,185);g.font='29px monospace';g.fillText('↓',120,220);
+ }
+ return c;
+}
+for(const type of ['enemy','hide','fuse','key','bottle','sign'])sprites[type]=sprite(type);
+function worldSprites(){
+ const objects=game.available().filter(o=>o.type!=='gate').map(o=>({...o,height:o.type==='fuse'||o.type==='key'?1.2:o.type==='bottle'?.85:o.height}));
+ if(game.e.active)objects.push({type:'enemy',id:'enemy',x:game.e.x,y:game.e.y,height:2.15});
+ objects.push({type:'sign',id:'exit_sign',x:4.5,y:23.5,height:2.1});return objects;
+}
+function render(now){
+ const w=canvas.width,h=canvas.height,horizon=h*(.5+lookPitch),proj=w/(2*Math.tan(Math.PI/6)),p=game.p;
+ const ceiling=ctx.createLinearGradient(0,0,0,horizon);ceiling.addColorStop(0,game.items.power?'#141c19':'#080d10');ceiling.addColorStop(1,game.items.power?'#354035':'#202a27');ctx.fillStyle=ceiling;ctx.fillRect(0,0,w,horizon);
+ const floor=ctx.createLinearGradient(0,horizon,0,h);floor.addColorStop(0,game.items.power?'#44503d':'#2b3630');floor.addColorStop(1,'#0b1515');ctx.fillStyle=floor;ctx.fillRect(0,horizon,w,h);
+ ctx.strokeStyle='#afc2a019';for(let i=1;i<15;i++){const y=horizon+(i*i/225)*(h-horizon);ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}for(let i=-5;i<=5;i++){ctx.beginPath();ctx.moveTo(w/2+i*3,horizon);ctx.lineTo(w/2+i*w*.23,h);ctx.stroke();}
+ const fx=Math.cos(p.a),fy=Math.sin(p.a),planeX=-fy*Math.tan(Math.PI/6),planeY=fx*Math.tan(Math.PI/6),depth=new Float32Array(w);
+ const flicker=now<flickerUntil&&$('effects').checked?(Math.sin(now*.032)>0?.55:1):1;
+ for(let x=0;x<w;x+=2){
+  const cam=2*x/w-1,rx=fx+planeX*cam,ry=fy+planeY*cam;
+  let mx=Math.floor(p.x),my=Math.floor(p.y),deltaX=Math.abs(1/rx),deltaY=Math.abs(1/ry),sx=rx<0?-1:1,sy=ry<0?-1:1,sdx=(rx<0?p.x-mx:mx+1-p.x)*deltaX,sdy=(ry<0?p.y-my:my+1-p.y)*deltaY,side=0,type=0,steps=0;
+  while(!type&&steps++<100){if(sdx<sdy){sdx+=deltaX;mx+=sx;side=0;}else{sdy+=deltaY;my+=sy;side=1;}type=game.material(mx,my);}
+  let dist=side?sdy-deltaY:sdx-deltaX;dist=Math.max(.04,dist);depth[x]=depth[x+1]=dist;
+  const height=proj*2.8/dist,bottom=horizon+proj*1.4/dist,top=bottom-height;
+  let u=side?p.x+dist*rx:p.y+dist*ry;u-=Math.floor(u);let tx=Math.floor(u*64);if((!side&&rx>0)||(side&&ry<0))tx=63-tx;
+  ctx.drawImage(textures[type]||textures[1],tx,0,1,64,x,top,2,height);
+  const beam=p.flash?Math.pow(Math.max(0,1-Math.abs(cam)*.82),2.6)*.88*Math.exp(-dist*.085):0;
+  const shade=clamp((game.items.power?.44:.20)+beam-(side?.045:0)-dist*.01,.08,.98)*flicker;
+  ctx.fillStyle=`rgba(2,9,10,${1-shade})`;ctx.fillRect(x,top,2,height);
+  if(type===3){const d=game.doorAt(mx,my);if(d.locked){ctx.fillStyle='#dd865c';ctx.fillRect(x,top+height*.55,2,height*.01);}}
+ }
+ const projected=worldSprites().map(o=>{const dx=o.x-p.x,dy=o.y-p.y,z=dx*fx+dy*fy,lateral=dx*(-fy)+dy*fx;return {...o,z,sx:w/2+lateral*proj/z};}).filter(o=>o.z>.1).sort((a,b)=>b.z-a.z);
+ for(const o of projected){
+  const sh=o.height*proj/o.z,sw=sh*2/3,left=o.sx-sw/2,bottom=horizon+proj*1.4/o.z,top=bottom-sh;
+  if(o.type==='panel'&&!sprites['panel_'+game.items.power])sprites['panel_'+game.items.power]=sprite('panel');
+  const image=o.type==='panel'?sprites['panel_'+game.items.power]:sprites[o.type];if(!image||left>w||left+sw<0)continue;
+  const centerAngle=Math.abs((o.sx-w/2)/(w/2)),beam=p.flash?Math.max(0,1-centerAngle)*.75:0;
+  ctx.globalAlpha=clamp((game.items.power?.7:.42)+beam-o.z*.02,.15,1)*flicker;
+  for(let col=Math.max(0,Math.floor(left));col<Math.min(w,left+sw);col+=2){if(o.z<depth[col]+.05){const src=(col-left)/sw*240;ctx.drawImage(image,src,0,Math.min(240-src,2/sw*240),360,col,top,2,sh);}}
+  ctx.globalAlpha=1;
+  if(game.objective().target?.id===o.id&&o.z<12&&game.los(p,o)){
+   ctx.font='10px Consolas,monospace';ctx.textAlign='center';ctx.fillStyle='#e5c673';ctx.shadowBlur=5;ctx.shadowColor='#000';ctx.fillText(o.label.toUpperCase(),o.sx,top-12);ctx.shadowBlur=0;
+  }
+ }
+ // Practical beam and a hand-held torch drawn over the world.
+ if(p.flash&&!p.hidden){const glow=ctx.createRadialGradient(w*.52,h*.55,2,w*.52,h*.55,w*.5);glow.addColorStop(0,'#dbe8a012');glow.addColorStop(1,'#00000000');ctx.fillStyle=glow;ctx.fillRect(0,0,w,h);ctx.save();ctx.translate(w*.88,h*.89);ctx.rotate(-.58);ctx.fillStyle='#152023';ctx.fillRect(-42,0,95,120);ctx.fillStyle='#324546';ctx.fillRect(-48,-20,107,40);ctx.fillStyle='#768774';ctx.fillRect(-43,-18,96,9);ctx.fillStyle='#405450';ctx.fillRect(-36,34,82,10);ctx.restore();}
+ const vignette=ctx.createRadialGradient(w/2,h/2,h*.12,w/2,h/2,w*.7);vignette.addColorStop(0,'#00000000');vignette.addColorStop(1,'#000000c5');ctx.fillStyle=vignette;ctx.fillRect(0,0,w,h);
+ if(p.hidden){ctx.fillStyle='#020a07b5';ctx.fillRect(0,0,w,h);ctx.fillStyle='#0b1710';for(let i=0;i<10;i++)ctx.fillRect(0,h*(i/10),w,h*.04);}
+ if(now<deathUntil){const shake=$('effects').checked?Math.sin(now*.11)*15:0,face=sprites.enemy;ctx.fillStyle='#080e0bee';ctx.fillRect(0,0,w,h);ctx.drawImage(face,65,10,107,114,w*.5-h*.55+shake,h*.1,h*1.1,h*.85);}
+}
+function drawMap(target,full){
+ const g=target.getContext('2d'),w=target.width,h=target.height,pad=full?20:3,scale=Math.min((w-pad*2)/W,(h-pad*2)/H),ox=(w-W*scale)/2,oy=(h-H*scale)/2;
+ g.fillStyle='#0e1816';g.fillRect(0,0,w,h);
+ for(let y=0;y<H;y++)for(let x=0;x<W;x++){const t=BASE[y][x];g.fillStyle=t===1?'#597066':t===2?'#354f43':t===3?(game.doorAt(x,y).locked?'#88594b':'#b2a779'):t===4?'#baa764':'#152a21';g.fillRect(ox+x*scale,oy+y*scale,scale-.25,scale-.25);}
+ const objective=game.objective(),path=objective.target?game.path(game.p,objective.target):[];
+ if(full&&path.length){g.strokeStyle='#e6c67180';g.lineWidth=2;g.setLineDash([3,4]);g.beginPath();g.moveTo(ox+game.p.x*scale,oy+game.p.y*scale);path.forEach(v=>g.lineTo(ox+v.x*scale,oy+v.y*scale));g.stroke();g.setLineDash([]);}
+ if(full){g.font='bold 10px Segoe UI';g.textAlign='center';g.fillStyle='#c9d7c4';for(const [text,x,y] of [['OFICINA',5,7.6],['TALLER',23.5,7.6],['DEPÓSITO',14.5,16.9],['TABLERO',23.5,23.5],['PORTÓN',6.4,23.5]])g.fillText(text,ox+x*scale,oy+y*scale);
+  for(const o of OBJECTS.filter(o=>o.type==='hide')){g.fillStyle='#79b59a';g.fillRect(ox+o.x*scale-3,oy+o.y*scale-3,6,6);}
+ }
+ if(objective.target){const o=objective.target,x=ox+o.x*scale,y=oy+o.y*scale;g.save();g.translate(x,y);g.rotate(Math.PI/4);g.fillStyle='#edcc73';g.fillRect(-4,-4,8,8);g.restore();}
+ g.save();g.translate(ox+game.p.x*scale,oy+game.p.y*scale);g.rotate(game.p.a+Math.PI/2);g.fillStyle='#edf3e9';g.beginPath();g.moveTo(0,-5);g.lineTo(4,4);g.lineTo(0,2);g.lineTo(-4,4);g.closePath();g.fill();g.restore();
+}
+function frame(now){
+ const dt=Math.min(.04,(now-lastFrame)/1000||0);lastFrame=now;
+ if(started&&!paused&&game.status==='playing'){
+  const input={forward:(keys.w?1:0)-(keys.s?1:0),strafe:(keys.d?1:0)-(keys.a?1:0),turn:(keys.arrowright?1:0)-(keys.arrowleft?1:0),sprint:!!keys.shift,mouse};lookPitch=clamp(lookPitch+mouseY+((keys.arrowup?1:0)-(keys.arrowdown?1:0))*dt*.5,-.42,.42);mouse=mouseY=0;const previousEnemy={x:game.e.x,y:game.e.y};game.update(dt,input);processEvents();
+  enemyStep+=distance(previousEnemy,game.e);if(game.e.active&&enemyStep>.85){if(distance(game.e,game.p)<17)sound('enemy',game.e);enemyStep=0;}
+  if(tutorial===0&&distance(game.p,{x:6.5,y:22.5})>2)tutorial=1;
+  if(game.items.fuse){tutorial=3;$('tutorial').classList.add('hidden');}
+ }
+ render(now);if(started)updateHUD(now);requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+</script>
+</body></html>

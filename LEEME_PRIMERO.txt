@@ -1,0 +1,78 @@
+ÚLTIMO TURNO — DEMO JUGABLE
+
+CÓMO ABRIRLO
+
+1. Extraé el ZIP completo: clic derecho, “Extraer todo”.
+2. Entrá a la carpeta ultimo_turno.
+3. Hacé doble clic en JUGAR.html.
+
+También podés abrir ABRIR_WINDOWS.bat. Solo abre el mismo archivo en tu navegador.
+
+No necesitás instalar Python, Ollama, Unity ni Unreal. El juego y los sonidos están incluidos en JUGAR.html. No requiere Internet. Si Windows no abre el HTML con un navegador, usá clic derecho > Abrir con > Chrome, Edge o Firefox.
+
+OBJETIVO
+
+Estás atrapado en un depósito durante el cierre. Hay un intruso entre las estanterías. El portón necesita corriente y una llave para abrirse.
+
+La pantalla indica el siguiente paso:
+
+1. Recoger el fusible del TALLER.
+2. Colocarlo en el TABLERO del cuarto eléctrico.
+3. Recoger la llave de la OFICINA.
+4. Activar el PORTÓN, sobrevivir mientras sube y salir.
+
+Al reparar el tablero se liberan las puertas de la oficina. La llave está sobre un escritorio. El portón tarda diez segundos en subir; podés alejarte mientras trabaja.
+
+CONTROLES
+
+W A S D             Caminar y moverte a los costados.
+Flechas ← →         Girar la vista.
+Clic en el escenario Capturar el mouse para mirar libremente.
+Esc                 Liberar el mouse / abrir pausa.
+Shift               Correr, consumiendo resistencia.
+E                   Abrir/cerrar puertas, recoger objetos y usar el tablero.
+E junto a un armario Esconderte. E otra vez para salir.
+F                   Encender o apagar la linterna.
+Q                   Arrojar una botella hacia donde mirás.
+M                   Ver el plano y la ruta sugerida. Pausa la amenaza.
+H                   Repetir la indicación para el objetivo actual.
+
+También hay botones para la linterna, la interacción, las botellas y el plano.
+
+En Windows, F11 pone el navegador en pantalla completa; F11 otra vez vuelve a la ventana.
+
+Al acercarte a un objeto, miralo: aparece una indicación de E. Las puertas de la oficina se liberan cuando reparás el tablero. Los escondites aparecen como cuadrados verdes en el plano.
+
+PARA SOBREVIVIR
+
+— Caminar produce poco ruido. Correr y abrir puertas hacen más ruido.
+— La linterna permite ver, pero el intruso puede detectar su luz a mayor distancia.
+— Si te ve, corré y doblá entre las estanterías. Una puerta cerrada lo demora.
+— No te escondas delante de él. La pantalla te avisa si te vio entrar.
+— El intruso recuerda los escondites que te vio usar y puede volver a revisarlos.
+— Q sirve para distraerlo. Arrojá la botella hacia otro pasillo, después alejate.
+— Tenés dos botellas al empezar; podés recoger más, hasta un máximo de tres.
+
+GUARDADO Y REINTENTOS
+
+Se guarda un punto de control al recoger el fusible, reparar el tablero y recoger la llave. Si te encuentra, podés continuar desde el último objetivo completado.
+
+Al volver a abrir el mismo archivo en el mismo navegador, aparece “Continuar partida”. El guardado usa almacenamiento del navegador: puede no estar disponible en ventanas privadas o si el navegador lo bloquea. El juego igualmente se puede completar y reintentar durante esa sesión.
+
+No cambies de ubicación el HTML ni de navegador si querés conservar el punto de control. Al escapar se borra el punto de control para dejar listo un nuevo turno.
+
+SONIDO Y OPCIONES
+
+El juego genera su ambiente, pasos, golpes, cristales y susto de captura. El volumen y las casillas de sonido y efectos se pueden cambiar antes de empezar o desde Pausa.
+
+La voz del supervisor utiliza únicamente una voz española local disponible en el navegador. Si no hay una, todos los mensajes siguen apareciendo escritos. No se necesita voz para terminar el juego.
+
+Si el navegador indica que preferís movimiento reducido, los parpadeos se desactivan inicialmente. La captura sigue mostrando al intruso y se puede silenciar con la casilla Sonido.
+
+PARA ENTREGAR EL PROYECTO
+
+JUGAR.html es el juego completo listo para ejecutar. La carpeta src contiene el código editable: index.html, style.css, core.js y game.js. Las capturas y la explicación técnica están en docs. Las pruebas están en tests.
+
+Es una demo de terror en primera persona con estética retro, renderizado por rayos, un mapa fijo y un enemigo con reglas de patrulla, búsqueda y persecución. No usa modelos de lenguaje ni requiere un servicio externo.
+
+COMODIDAD: WASD mueve. Mouse o flechas permiten mirar arriba y abajo. Las indicaciones de radio son breves y desaparecen; H repite la ayuda.
