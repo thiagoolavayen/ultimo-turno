@@ -4,7 +4,10 @@ Juego corto de terror y sigilo en primera persona. Un empleado queda encerrado e
 
 ## Integrantes
 
-**Pendiente de confirmar:** nombres y apellidos de los integrantes del equipo.
+- Benjamin Alcibar
+- Thiago Lavayen
+- Franco Carnessali
+- Maximo Mayandes
 
 ## Ejecutar el juego en una PC
 
